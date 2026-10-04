@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PosturePal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🌱 PosturePal</h1>
+    <div class="header-right">
+      <span id="hello" class="hello hidden"></span>
+      <button id="signOutBtn" class="link hidden">Sign out</button>
+      <span id="pill" class="pill off">● Camera off</span>
+    </div>
+  </header>
+
+  <!-- Sign-up screen -->
+  <section id="signup" class="signup hidden">
+    <form id="signupForm" class="card">
+      <h2 class="big">Get posture nudges by iMessage</h2>
+      <p class="muted">Sign up once. We'll text you only while <strong>you</strong> have tracking turned on.</p>
+      <div class="two">
+        <label>First name<input name="firstName" required autocomplete="given-name" /></label>
+        <label>Last name<input name="lastName" required autocomplete="family-name" /></label>
+      </div>
+      <label>Email<input name="email" type="email" required autocomplete="email" /></label>
+      <label>iPhone number (iMessage)<input name="phone" type="tel" required placeholder="+1 765 555 1234" autocomplete="tel" /></label>
+      <label class="check"><input name="consent" type="checkbox" required />
+        I agree to receive iMessages from PosturePal. I can reply "unsubscribe" anytime.</label>
+      <button type="submit" class="primary" id="signupBtn">Sign up</button>
+      <p id="signupError" class="error hidden"></p>
+      <p class="muted small">Already signed up? Enter the same phone number to sign back in.</p>
+    </form>
+  </section>
+
+  <div id="activateBanner" class="activate hidden">
+    📱 <strong>One last step:</strong> reply <strong>"hi"</strong> to PosturePal's text on your iPhone to turn on nudges.
+    <span class="muted small">(Check "Unknown Senders" if you don't see it. This page updates automatically.)</span>
+  </div>
+
+  <main id="tracker" class="hidden">
+    <section class="stage">
+      <div class="video-wrap">
+        <video id="video" playsinline muted></video>
+        <canvas id="overlay"></canvas>
+        <div id="banner" class="banner hidden"></div>
+        <div id="placeholder" class="placeholder">
+          <p>Your camera is <strong>off</strong>.<br />Nothing is recorded or uploaded, ever.</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="startBtn" class="primary">▶ Start tracking</button>
+        <button id="stopBtn" class="danger" disabled>■ Stop</button>
+        <button id="calibrateBtn">🎯 Recalibrate</button>
+        <button id="testBtn">🔔 Send test nudge</button>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <h2>Session</h2>
+      <div class="stats">
+        <div><span id="timer">0:00</span><label>Time</label></div>
+        <div><span id="goodPct">–</span><label>Upright</label></div>
+        <div><span id="alerts">0</span><label>Nudges</label></div>
+      </div>
+
+      <h2>Live posture</h2>
+      <div id="status" class="status">Not tracking</div>
+      <ul id="metrics" class="metrics"></ul>
+
+      <h2>Settings</h2>
+      <label class="row">Sensitivity
+        <select id="sensitivity">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+        </select>
+      </label>
+      <label class="row">Alert after
+        <select id="slouchSeconds">
+          <option value="15">15 s</option>
+          <option value="30" selected>30 s</option>
+          <option value="60">60 s</option>
+        </select>
+      </label>
+      <p class="calib" id="calibInfo">Not calibrated yet</p>
+
+      <h2>🔒 Privacy: what leaves this page</h2>
+      <pre id="lastPayload">Nothing yet. Only small JSON like this is ever sent. Never images.</pre>
+    </aside>
+  </main>
+
+  <script src="config.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
